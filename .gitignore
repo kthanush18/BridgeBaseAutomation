@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/CommonWeb/bin/Debug
+/CommonWeb/obj/Debug
+/NUnitTests/.vs/BridgeBaseAutomation/v15
+/NUnitTests/BridgeBaseAutomation/obj
+/NUnitTests/packages/AngleSharp.0.14.0
+/NUnitTests/packages/DotNetSeleniumExtras.WaitHelpers.3.11.0
+/NUnitTests/packages/Microsoft.TestPlatform.TestHost.16.8.3
+/NUnitTests/packages
