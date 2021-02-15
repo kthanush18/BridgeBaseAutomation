@@ -13,7 +13,7 @@ namespace com.BridgeBaseAutomation
         private readonly By practice_Button_Locator = By.XPath("//div [text() = 'Practice']/..");
         private readonly By start_Bid_Table_Button_Locator = By.XPath("//div [text() = 'Start a Bidding table']/..");
         private readonly By start_Teach_Table_Button_Locator = By.XPath("//div [text() = 'Start a Teaching table']/..");
-        private readonly By bridge_Master_Button_Locator = By.XPath("//div [text() = 'Bridge Master']/..");
+        private readonly By bridge_Master_Button_Locator = By.XPath("//div [text() = 'Bridge Master1']/..");
 
         public string GetUsername()
         {

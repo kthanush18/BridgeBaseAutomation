@@ -9,6 +9,7 @@ namespace com.BridgeBaseAutomation
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            SetUpExtentReports();
             _home = new Home();
             _home.LaunchBrowser(BrowserType.CHROME);
             _home.NavigateToURL("https://www.bridgebase.com/");
@@ -17,6 +18,7 @@ namespace com.BridgeBaseAutomation
         [SetUp]
         public void SetUp()
         {
+            CreateTestInExtentReport();
             _login = new Login();
             _dashboard = new DashBoard();
         }
@@ -67,13 +69,14 @@ namespace com.BridgeBaseAutomation
         [TearDown]
         public void TearDown()
         {
-            
+            LogTestStatus();  
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
             _home.CloseBrowser();
+            PublishExtentReports();
         }
     }
 }
