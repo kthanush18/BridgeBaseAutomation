@@ -1,21 +1,23 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
+using Com.Common.Web;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace com.BridgeBaseAutomation
 {
-    public class TestBase
+    public class TestBase : WebBrowser
     {
         protected Home _home;
         protected Login _login;
         protected DashBoard _dashboard;
-        protected ExtentReports _extent;
-        protected ExtentTest _test;
+        private ExtentReports _extent;
+        private ExtentTest _test;
 
         protected string username = "bridge8259";
         protected string password = "bridge8259";
@@ -27,7 +29,9 @@ namespace com.BridgeBaseAutomation
                 //To create report directory and add HTML report into it
                 _extent = new ExtentReports();
                 string dateTimeNow = DateTime.Now.ToString("yyyy'-'MM'-'dd'-'HH'-'mm'-'ss");
-                ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter($@"D:\Professional\C#Projects\NUnitTests\TestReports\report{dateTimeNow}.html");
+                string currentDirectory = AppDomain.CurrentDomain.BaseDirectory.Replace("\\bin\\Debug\\netcoreapp2.1","");
+                DirectoryInfo createReportDirectory = Directory.CreateDirectory(currentDirectory + "\\Test_Execution_Reports");
+                ExtentV3HtmlReporter htmlReporter = new ExtentV3HtmlReporter($"{currentDirectory}\\Test_Execution_Reports\\report-{dateTimeNow}.html");
                 htmlReporter.Config.Theme = Theme.Dark;
                 _extent.AttachReporter(htmlReporter);
             }
@@ -61,7 +65,9 @@ namespace com.BridgeBaseAutomation
                 {
                     case TestStatus.Failed:
                         logstatus = Status.Fail;
-                        _test.Log(logstatus, "Test ended with " + logstatus + " – " + errorMessage);
+                        string screenShotPath = TakeScreenShot(TestContext.CurrentContext.Test.Name);
+                        _test.Log(logstatus, "Test ended with " +logstatus + " – " +errorMessage);
+                        _test.Log(logstatus, "Snapshot below: " +_test.AddScreenCaptureFromPath(screenShotPath));
                         break;
                     case TestStatus.Skipped:
                         logstatus = Status.Skip;

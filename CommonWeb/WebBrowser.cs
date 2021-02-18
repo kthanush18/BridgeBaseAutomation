@@ -4,6 +4,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using WebDriverManager.DriverConfigs.Impl;
@@ -69,6 +70,26 @@ namespace Com.Common.Web
         {
             _driver.Close();
             _driver.Quit();
+        }
+
+        protected string TakeScreenShot(string screenShotName)
+        {
+            string localpath = "";
+            string dateTimeNow = DateTime.Now.ToString("dd-'MM'-'yyyy");
+            try
+            {
+                ITakesScreenshot takeScreenShot = (ITakesScreenshot)_driver;
+                Screenshot screenshot = takeScreenShot.GetScreenshot();
+                string currentDirectory = AppDomain.CurrentDomain.BaseDirectory.Replace("\\bin\\Debug\\netcoreapp2.1", "");
+                DirectoryInfo createReportDirectory = Directory.CreateDirectory($"{currentDirectory}\\Test_Execution_Reports_{dateTimeNow}");
+                localpath = $"{currentDirectory}\\Test_Execution_Reports_{dateTimeNow}\\{screenShotName}.{ImageFormat.Jpeg}";
+                screenshot.SaveAsFile(localpath);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+            return localpath;
         }
     }
 }
